@@ -1,3 +1,6 @@
+http://workshop.grahovac.pro
+
+
 - go mod - dependency management
 - goproxy - speedup download and update
 - testing - testify lib but need to think about more idiomatic code

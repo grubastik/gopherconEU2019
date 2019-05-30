@@ -10,5 +10,6 @@ func ReadyHandler(logger *logrus.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		logger.Infoln("processing ready request")
 		w.WriteHeader((http.StatusOK))
+		w.Write([]byte("OK"))
 	}
 }

@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gorilla/mux"
 	"github.com/grubastik/gopherconEU2019/internal/app"
@@ -12,17 +15,27 @@ import (
 )
 
 func main() {
+	//logger
 	logger := logger.New()
 	logger.SetOutput(os.Stdout)
 	logger.Infoln("app started")
 	defer logger.Infoln("app finished")
 	// Do not use for prod!!! Always customize server settings
 	//http.ListenAndServe("localhost:8080", nil)
+
+	//env vars
 	port := os.Getenv("WORKSHOP_PORT")
 	if port == "" {
 		logger.Fatalln("WORKSHOP_PORT env var is not set")
 	}
 
+	//signals and shutdown
+	interrupt := make(chan os.Signal, 1) //need bufferred because can have multiple interruptions in a row
+	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
+
+	shutdown := make(chan error, 1)
+
+	//handlers
 	r := mux.NewRouter()
 	r.HandleFunc("/", app.HomeHandler1(logger))
 	r.HandleFunc("/healthz", diagnostics.HealthHandler(logger))
@@ -32,8 +45,28 @@ func main() {
 		Addr:    net.JoinHostPort("", port),
 		Handler: r,
 	}
-	err := server.ListenAndServe()
+
+	//start server
+	go func() {
+		err := server.ListenAndServe()
+		shutdown <- err
+	}()
+
+	logger.Infoln("Serving requests")
+
+	select {
+	case signal := <-interrupt:
+		switch signal {
+		case os.Interrupt:
+			logger.Infoln("Interrupted")
+		case syscall.SIGTERM:
+			logger.Infoln("Got sygterm")
+		}
+	case <-shutdown:
+		logger.Infoln("got shutdown")
+	}
+	err := server.Shutdown(context.Background())
 	if err != nil {
-		logger.Fatalln("error starting server: " + err.Error())
+		logger.Fatalln("Error stopping server: " + err.Error())
 	}
 }
