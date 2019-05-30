@@ -21,11 +21,11 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.Handle("/", app.HomeHandler)
+	r.HandleFunc("/", app.HomeHandler)
 
 	server := http.Server{
-		Addr: net.JoinHostPort("", port),
-		handler: r,
+		Addr:    net.JoinHostPort("", port),
+		Handler: r,
 	}
 	server.ListenAndServe()
 

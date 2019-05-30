@@ -1,4 +1,4 @@
 - go mod - dependency management
 - goproxy - speedup download and update
 - testing - testify lib but need to think about more idiomatic code
-- 
+- profiling - simple to use. enable by defult in prod app

@@ -10,7 +10,7 @@ import (
 
 func TestHomeHandler(t *testing.T) {
 	req := httptest.NewRequest(
-		"GET", "localhost/", nil,
+		"GET", "http://localhost", nil,
 	)
 	w := httptest.NewRecorder()
 	HomeHandler(w, req)

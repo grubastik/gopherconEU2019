@@ -1,4 +1,4 @@
-module github.com/grubastik/gopherconEU2019/cmd/workshop
+module github.com/grubastik/gopherconEU2019
 
 require (
 	github.com/gorilla/mux v1.7.2
