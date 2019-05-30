@@ -21,4 +21,9 @@ Operability:
 - split servers for diagnostics and bussines
 
 Handle os flags correctly
+
 Use version during compilation time using ldFlags
+
+Don't hesitate to use Makefile
+
+Prepare "Cloud native Hello world" service template (caldera)

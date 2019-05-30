@@ -29,7 +29,7 @@ func main() {
 		logger.Fatalln("WORKSHOP_PORT env var is not set")
 	}
 
-	//signals and shutdown
+	//signals configuration
 	interrupt := make(chan os.Signal, 1) //need bufferred because can have multiple interruptions in a row
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
 
@@ -54,6 +54,7 @@ func main() {
 
 	logger.Infoln("Serving requests")
 
+	//handle server errors and OS signals
 	select {
 	case signal := <-interrupt:
 		switch signal {
@@ -65,6 +66,8 @@ func main() {
 	case <-shutdown:
 		logger.Infoln("got shutdown")
 	}
+
+	//shutdown server
 	err := server.Shutdown(context.Background())
 	if err != nil {
 		logger.Fatalln("Error stopping server: " + err.Error())
