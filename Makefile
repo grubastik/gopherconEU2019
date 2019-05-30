@@ -4,6 +4,7 @@ COMMIT=$(shell git log -1 --pretty=format:"%H")
 BUILDTIME=$(shell date --utc +%FT%TZ)
 
 test:
+	go mod download
 	go test --race ./...
 
 build:

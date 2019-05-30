@@ -27,3 +27,7 @@ Use version during compilation time using ldFlags
 Don't hesitate to use Makefile
 
 Prepare "Cloud native Hello world" service template (caldera)
+
+Keel
+k3s
+k3d
