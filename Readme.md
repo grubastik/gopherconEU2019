@@ -6,7 +6,13 @@
 Observability:
 - log tracing, metrics, etc.
 - use panic wisely
+- opensensu -> datadog, eger, prometeus,...
 
 Matrics:
 - bussines - understanding usage
 - tracing - understanding data flow
+
+Operability:
+- healthy
+- readiness
+- split servers for diagnostics and bussines

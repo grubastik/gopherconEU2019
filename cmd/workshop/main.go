@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/grubastik/gopherconEU2019/internal/app"
+	"github.com/grubastik/gopherconEU2019/internal/diagnostics"
 	logger "github.com/sirupsen/logrus"
 )
 
@@ -24,6 +25,8 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", app.HomeHandler1(logger))
+	r.HandleFunc("/healthz", diagnostics.HealthHandler(logger))
+	r.HandleFunc("/readyz", diagnostics.ReadyHandler(logger))
 
 	server := http.Server{
 		Addr:    net.JoinHostPort("", port),
