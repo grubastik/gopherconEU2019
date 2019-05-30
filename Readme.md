@@ -19,3 +19,6 @@ Operability:
 - healthy
 - readiness
 - split servers for diagnostics and bussines
+
+Handle os flags correctly
+Use version during compilation time using ldFlags

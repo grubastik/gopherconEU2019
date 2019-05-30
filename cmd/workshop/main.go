@@ -18,7 +18,7 @@ func main() {
 	//logger
 	logger := logger.New()
 	logger.SetOutput(os.Stdout)
-	logger.Infoln("app started")
+	logger.Infoln("app started. Version:", diagnostics.Version, " Commit: ", diagnostics.Commit, " BuildTime: ", diagnostics.BuildTime)
 	defer logger.Infoln("app finished")
 	// Do not use for prod!!! Always customize server settings
 	//http.ListenAndServe("localhost:8080", nil)
