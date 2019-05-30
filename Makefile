@@ -4,8 +4,8 @@ COMMIT=$(shell git log -1 --pretty=format:"%H")
 BUILDTIME=$(shell date --utc +%FT%TZ)
 
 test:
-	go mod download
-	go test --race ./...
+	GO111MODULE=on CGO_ENABLED=0 go mod download
+	GO111MODULE=on CGO_ENABLED=0 go test --race ./...
 
 build:
 	GO111MODULE=on CGO_ENABLED=0 go build \
